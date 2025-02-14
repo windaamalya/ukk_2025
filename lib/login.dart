@@ -1,135 +1,118 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ukk_2025/homepage.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+String supabaseUrl = 'https://mltamjiypuvthtzpplxc.supabase.co';
+String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sdGFtaml5cHV2dGh0enBwbHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MTUyOTQsImV4cCI6MjA1NDk5MTI5NH0.A6d_9iuAsTFCKjeEA7Ph6Wv9VCJ9J2-klKqX8FM0htA';
 
-  @override
-  State<Login> createState() => _LoginState();
-  
-  void dispose() {}
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Supabase.initialize(
+    url: 'https://mltamjiypuvthtzpplxc.supabase.co', 
+    anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sdGFtaml5cHV2dGh0enBwbHhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzk0MTUyOTQsImV4cCI6MjA1NDk5MTI5NH0.A6d_9iuAsTFCKjeEA7Ph6Wv9VCJ9J2-klKqX8FM0htA'
+    );
+    runApp(LoginPage());
 }
-class _LoginState extends State<Login> {
-  late Login _model;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
- @override
-  void dispose() {
-    _model.dispose();
 
-    super.dispose();
+
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginState();
+}
+
+class _LoginState extends State<LoginPage> {
+  final UserNameController = TextEditingController();
+  final PasswordController = TextEditingController();
+  final SupabaseClient supabase = Supabase.instance.client;
+
+  Future<void> _Login() async {
+    final UserName = UserNameController.text;
+    final Password = PasswordController.text;
+
+    try {
+      final response = await supabase
+        .from('user')
+        .select('UserName, Password')
+        .eq('UserName', UserName)
+        .single();
+
+    if (response !=null && response ['Password'] == Password) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text ('Login Berhasil')),
+      );
+      Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => Homepage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Username atau Password salah!')),
+      );
+    }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Terjadi Kesalahan: $e')),
+      );
+    }
   }
- @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-        FocusManager.instance.primaryFocus?.unfocus();
-        },
-      child: Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Color(0xA74B39EF),
-          automaticallyImplyLeading: false,
-          title: Text(
-            'LOGIN',
+
+   @override
+   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue[200],
+        title: Text("Login"),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 50),
+            height: 100,
           ),
-           actions: [],
-          centerTitle: false,
-          elevation: 2,
-        ),
-        body: SafeArea(
-          top: true,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.asset(
-                      'assets/images/logologin.png',
-                      fit: BoxFit.fill,
-                      alignment: Alignment(0, 0),
-                    ),
-                  ),
+          Center(
+            child: Text("Login", style: TextStyle(fontSize: 40, color: Colors.blue[300])),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: TextField(
+                controller: UserNameController,
+                decoration: InputDecoration(
+                  labelText: "Username",
+                  icon: Icon(Icons.person, color: Colors.blue[300]),
+                  fillColor:  Colors.blue[50],
+                  filled: true,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                 ),
               ),
-              Align(
-                alignment: AlignmentDirectional(0, 0),
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: AnimatedContainer(
-                    duration: Duration(milliseconds: 0),
-                    curve: Curves.easeIn,
-                    width: 300,
-                    height: 50,
-                    decoration: BoxDecoration(
-                      color: Color(0x52000000),
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(30),
-                        bottomRight: Radius.circular(30),
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                      border: Border.all(
-                        color: Color(0x58000000),
-                        width: 1,
-                      ),
-                    ),
-                    alignment: AlignmentDirectional(0, 0),
-                  ),
-                ),
+           ),
+           Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: TextField(
+                controller: PasswordController,
+                decoration: InputDecoration(
+                  labelText: "Password",
+                 icon: Icon(Icons.vpn_key_sharp, color: Colors.blue[300]),
+                 fillColor: Colors.blue[50],
+                 filled: true,
+                 border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
               ),
-              Container(
-                width: 300,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0x52000000),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30),
-                    bottomRight: Radius.circular(30),
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                  border: Border.all(
-                    color: Color(0x61000000),
-                    width: 1,
-                  ),
-                ),
+              obscureText: true,
+           ),
+           ),
+           Center(
+            child: ElevatedButton(
+              onPressed: _Login,
+              child: Text("Login"),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue[200],
+                fixedSize: Size(100, 40),
               ),
-              Padding(
-                padding: EdgeInsets.all(24),
-                child: Container(
-                  width: 100,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(0xB24B39EF),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30),
-                      bottomRight: Radius.circular(30),
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
-                    ),
-                    border: Border.all(
-                      color: Color(0x32000000),
-                      width: 1,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+           ),
+        ],
       ),
     );
   }
-  
- 
 }
-
+ 
