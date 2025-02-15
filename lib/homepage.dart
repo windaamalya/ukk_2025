@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:ukk_2025/pelanggan/index.dart';
+import 'package:ukk_2025/produk/insert.dart';
+import 'package:ukk_2025/produk/index.dart';
 import 'login.dart';
 
-class Homepage extends StatefulWidget {
-  const Homepage({super.key});
+class AdminHomepage extends StatefulWidget {
+  const AdminHomepage({super.key});
 
 @override
-State<Homepage> createState() => _HomepageState();
+State<AdminHomepage> createState() => _HomepageState();
 }
 
-class _HomepageState extends State<Homepage>{
+class _HomepageState extends State<AdminHomepage>{
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(length: 4, child: 
@@ -40,7 +43,7 @@ class _HomepageState extends State<Homepage>{
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>Homepage()),
+                      MaterialPageRoute(builder: (context) =>AdminHomepage()),
                       );
                   },
                 ),
@@ -63,27 +66,9 @@ class _HomepageState extends State<Homepage>{
         children: [
           produkTab(),
           pelangganTab(),
-          penjualanTab(),
-          detailpenjualanTab(),
         ],
       ),
      )
     );
   }
-}
-
-Widget produkTab() {
-  return Center(child: Text('Halaman Produk'));
-}
-
-Widget pelangganTab() {
-  return Center(child: Text('Halaman pelanggan'));
-}
-
-Widget penjualanTab(){
-  return Center(child: Text('Halaman Penjualan'));
-}
-
-Widget detailpenjualanTab (){
-  return Center(child: Text('Halaman Detail Penjualan'));
-}
+  }
