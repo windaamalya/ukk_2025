@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ukk_2025/detailpenjualan.dart';
 import 'package:ukk_2025/produk/insert.dart';
 import 'package:ukk_2025/produk/update.dart';
 
@@ -65,7 +66,10 @@ class _produkTabState extends State<produkTab> {
       itemBuilder: (context, index) {
         final roduk = produk[index];
         return InkWell(
-
+          onTap: () {
+            Navigator.push(context, 
+            MaterialPageRoute(builder: (context) => ProdukDetailPage(produk: roduk)));
+          },
           child: 
           Card(
             elevation: 4,
@@ -164,8 +168,10 @@ class _produkTabState extends State<produkTab> {
         MaterialPageRoute(builder: (context) => AddProduk()),
         );
        },
+        backgroundColor: Colors.blue,
         child: Icon(Icons.add),
     ),
+     floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
   );
  }
 }

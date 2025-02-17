@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ukk_2025/indexjual.dart';
 import 'package:ukk_2025/pelanggan/index.dart';
-import 'package:ukk_2025/produk/insert.dart';
+import 'package:ukk_2025/penjualan/index.dart';
 import 'package:ukk_2025/produk/index.dart';
+import 'package:ukk_2025/register.dart';
 import 'login.dart';
 
 class AdminHomepage extends StatefulWidget {
@@ -58,6 +60,16 @@ class _HomepageState extends State<AdminHomepage>{
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
               },
+            ),
+            ListTile(
+              leading: Icon(Icons.app_registration),
+              title: Text('User'),
+              onTap: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (context) => Register()),
+                  );
+              },
             )
           ],
         ),
@@ -66,6 +78,8 @@ class _HomepageState extends State<AdminHomepage>{
         children: [
           produkTab(),
           pelangganTab(),
+          penjualanTab(),
+          detailpenjualanTab(),
         ],
       ),
      )
