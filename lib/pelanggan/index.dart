@@ -36,7 +36,7 @@ class _pelangganTabState extends State<pelangganTab> {
     }
   }
 
-  Future<void> deletePelanggan(int PelangganID) async {
+  Future<void> deletepelanggan(int PelangganID) async {
     try {
       await Supabase.instance.client.from('pelanggan').delete().eq('PelangganID', PelangganID);
       fetchPelanggan();
@@ -128,7 +128,7 @@ class _pelangganTabState extends State<pelangganTab> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        deletePelanggan(langgan['PelangganID']);
+                                        deletepelanggan(langgan['PelangganID']);
                                         Navigator.pop(context);
                                       },
                                       child: const Text('Hapus'),

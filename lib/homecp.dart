@@ -86,3 +86,17 @@
 //     );
 //   }
 //   }
+
+
+
+
+
+
+// Future<void> deleteproduk(int ProdukID) async {
+//     try {
+//       await Supabase.instance.client.from('produk').delete().eq('ProdukID', ProdukID);
+//       fetchProduk();
+//     } catch (e) {
+//       print('Error deleting produk: $e');
+//     }
+//   }

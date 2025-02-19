@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:ukk_2025/homepage.dart';
 
 class detailpenjualanTab extends StatefulWidget {
   const detailpenjualanTab({super.key});
@@ -25,7 +26,7 @@ class _detailpenjualanTabState extends State<detailpenjualanTab> {
     try {
       final response = await Supabase.instance.client
         .from('detailpenjualan')
-        .select('*,penjualan(*), produk(*)');
+        .select('*,penjualan(*,pelanggan(*)), produk(*)');
       setState(() {
         penjualanlist = List<Map<String, dynamic>>.from(response);
         isLoading = false;
@@ -80,7 +81,7 @@ class _detailpenjualanTabState extends State<detailpenjualanTab> {
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(width: 28),
-                        Text('Subtotal: ${detail['Subtotal']?.toString() ?? 'tidak tersedia'}',
+                        Text('SubTotal: ${detail['SubTotal']?.toString() ?? 'tidak tersedia'}',
                         style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                       ],

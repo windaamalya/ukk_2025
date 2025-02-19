@@ -6,6 +6,7 @@ import 'package:ukk_2025/produk/index.dart';
 import 'package:ukk_2025/register.dart';
 import 'login.dart';
 
+
 class AdminHomepage extends StatefulWidget {
   const AdminHomepage({super.key});
 
@@ -24,8 +25,8 @@ class _HomepageState extends State<AdminHomepage>{
           tabs: [
             Tab(icon: Icon(Icons.inventory), text: 'Produk'),
             Tab(icon: Icon(Icons.people), text: 'Pelanggan'),
-            Tab(icon: Icon(Icons.shopping_cart), text: 'Penjualan'),
-            Tab(icon: Icon(Icons.drafts), text: 'Detail Penjualan'),
+            Tab(icon: Icon(Icons.shopping_cart), text: 'Transaksi'),
+            Tab(icon: Icon(Icons.drafts), text: 'Riwayat'),
           ]
         )
       ),

@@ -66,7 +66,7 @@ Future<void> prodk() async {
 
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Nama tidak boleh kosong';
+                    return 'Total harga tidak boleh kosong';
                   }
                   return null;
                 },
